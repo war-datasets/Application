@@ -40,9 +40,23 @@ class HelpdeskRepository extends Repository
      *
      * @return bool
      */
-    public function userHasNeededRights()
+    public function userHasAdminRights()
     {
         $user = auth()->user();
         return $user->hasRole('admin') || $user->hasRole('helpdesk');
+    }
+
+    /**
+     * @param $ticket
+     * @return bool
+     */
+    public function userCanViewTicket($ticket)
+    {
+        $user = auth()->user();
+
+        $checkAdmin  = $user->hasRole('admin') || $user->hasRole('helpdesk');
+        $checkAuthor = $ticket->author_id === $user->id;
+
+        return $checkAdmin || $checkAuthor;
     }
 }

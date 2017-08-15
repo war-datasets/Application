@@ -22,14 +22,12 @@ class HelpdeskController extends Controller
      */
     public function __construct(HelpdeskRepository $helpdeskRepository)
     {
-        $this->middleware('auth')->only(['indexAdmin', 'status', 'show']);
-
         $this->helpdeskRepository = $helpdeskRepository;
     }
 
-    public function indexUser()
+    public function index()
     {
-        if ($this->helpdeskRepository->userHasNeededRights()) { // The user has the admin rights.
+        if ($this->helpdeskRepository->userHasAdminRights()) { // The user has the admin rights.
             $tickets = $this->helpdeskRepository->getTicketsAdmin(30);
             return view('helpdesk.admin', compact('tickets'));
         }
