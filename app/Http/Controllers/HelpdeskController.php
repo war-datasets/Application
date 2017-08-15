@@ -3,6 +3,8 @@
 namespace ActivismeBE\Http\Controllers;
 
 use ActivismeBE\Repositories\HelpdeskRepository;
+use ActivismeBE\Traits\Conditions\Helpdesk as HelpdeskCondtions;
+
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -13,6 +15,13 @@ use Illuminate\Http\Request;
  */
 class HelpdeskController extends Controller
 {
+    use HelpdeskCondtions; // Used to place the conditions in the if/else operators.
+
+    /**
+     * Eloquent database layer.
+     *
+     * @var HelpdeskRepository
+     */
     private $helpdeskRepository;
 
     /**
@@ -27,7 +36,7 @@ class HelpdeskController extends Controller
 
     public function index()
     {
-        if ($this->helpdeskRepository->userHasAdminRights()) { // The user has the admin rights.
+        if ($this->userHasAdminRights()) { // The user has the admin rights.
             $tickets = $this->helpdeskRepository->getTicketsAdmin(30);
             return view('helpdesk.admin', compact('tickets'));
         }
@@ -43,7 +52,12 @@ class HelpdeskController extends Controller
     {
         try { // To find the ticket in the database.
             $ticket = $this->helpdeskRepository->findTicket($ticketId);
-            return view('helpdesk.show', compact('ticket'));
+
+            if ($this->userCanViewTicket($ticket)) { // The user is permitted to view the ticket.
+                return view('helpdesk.show', compact('ticket'));
+            }
+
+            return redirect()->route('helpdesk.index'); // Redirect the user. Because not permissions;
         } catch (ModelNotFoundException $modelNotFoundException) { // Ticket => NOT FOUND
             flash("Wij konden geen ticket vinden met de id #{$ticketId}")->danger();
             return redirect()->route('helpdesk.route');
