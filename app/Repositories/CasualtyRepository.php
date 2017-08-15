@@ -30,7 +30,6 @@ class CasualtyRepository extends Repository
     public function search($term)
     {
         return $this->model->where('member_name', 'LIKE', "%$term%")
-            ->orWhere('service_no', 'LIKE', "%$term%")
-            ->paginate(50);
+            ->orWhere('service_no', 'LIKE', "%$term%");
     }
 }

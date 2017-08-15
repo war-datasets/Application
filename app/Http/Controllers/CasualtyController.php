@@ -39,8 +39,8 @@ class CasualtyController extends Controller
 
     public function search(Request $input)
     {
-        $casualties = $this->casualtyRepository->search($input->term);
-        $count      = count($casualties);
+        $casualties = $this->casualtyRepository->search($input->term)->paginate(50);
+        $count      = $casualties->count();
 
         return view('casualties.search', compact('casualties', 'count'));
     }
