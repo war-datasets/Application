@@ -40,6 +40,14 @@
                         <li><a href="{{ route('casualties.index') }}"><span class="fa fa-list" aria-hidden="true"></span> Namenlijst</a></li>
                         <li><a href="{{ route('news.index') }}"><span class="fa fa-newspaper-o" aria-hidden="true"></span> Nieuws</a></li>
                         <li><a href="{{ route('disclaimer') }}"><span class="fa fa-legal" aria-hidden="true"></span> Disclaimer</a></li>
+
+                        @if (auth()->check()) {{-- There is a authencated user. --}}
+                            <li>
+                                <a href="">
+                                    <span class="fa fa-question" aria-hidden="true"></span> Helpdesk
+                                </a>
+                            </li>
+                        @endif {{-- END authencated user block. --}}
                     </ul>
 
                     <!-- Right Side Of Navbar -->

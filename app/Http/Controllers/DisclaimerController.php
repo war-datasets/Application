@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
  */
 class DisclaimerController extends Controller
 {
+    /**
+     * Disclaimer page controller in the application.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view('disclaimer.index');
