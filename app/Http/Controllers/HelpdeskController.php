@@ -28,7 +28,11 @@ class HelpdeskController extends Controller
 
     public function indexUser()
     {
+        $all    = $this->helpdeskRepository->countQuestions();
+        $open   = $this->helpdeskRepository->countQuestions('open', 'Y');
+        $closed = $this->helpdeskRepository->countQuestions('open', 'N');
 
+        return view('helpdesk.index', compact('all', 'open', 'closed'));
     }
 
     public function indexAdmin()
