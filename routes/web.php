@@ -26,3 +26,4 @@ Route::get('account/settings', 'AccountSettingsController@index')->name('account
 Route::get('news/index', 'NewsController@index')->name('news.index');
 
 Route::get('helpdesk', 'HelpdeskController@index')->name('helpdesk.index');
+Route::get('helpdesk/admin', 'HelpdeskController@admin')->name('helpdesk.admin');

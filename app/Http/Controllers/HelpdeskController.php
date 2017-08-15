@@ -34,11 +34,17 @@ class HelpdeskController extends Controller
         $this->helpdeskRepository = $helpdeskRepository;
     }
 
+    /**
+     * Get the index for the helpdesk system.
+     * ----
+     * If the user has the corrent permissions he will be redirected to the admin panel.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         if ($this->userHasAdminRights()) { // The user has the admin rights.
-            $tickets = $this->helpdeskRepository; // Return repository instance. functions called in view.
-            return view('helpdesk.admin', compact('tickets'));
+            return redirect()->route('helpdesk.admin');
         }
 
         $all    = $this->helpdeskRepository->countQuestions();
@@ -48,6 +54,23 @@ class HelpdeskController extends Controller
         return view('helpdesk.index', compact('all', 'open', 'closed'));
     }
 
+    /**
+     * The admin cockpit for the helpdesk.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function admin()
+    {
+        $tickets = $this->helpdeskRepository; // Return repository instance. functions called in view.
+        return view('helpdesk.admin', compact('tickets'));
+    }
+
+    /**
+     * Show a specific ticket in the application.
+     *
+     * @param  integer $ticketId The id from the ticket in the database.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function show($ticketId)
     {
         try { // To find the ticket in the database.
@@ -76,7 +99,7 @@ class HelpdeskController extends Controller
         try { // To find the the support ticket in the database.
             $ticket = $this->helpdeskRepository->findTicket($ticketId);
 
-            if ($this->helpdeskRepository->updateTicket(['status' => $open])) {
+            if ($this->helpdeskRepository->updateTicket($ticket->id, ['status' => $open])) {
                 // Ticket has been updated.
                 switch ($open) { // Determinate the status and set message based on status.
                     case 'Y': $message = "Wij hebben ticket #{$ticket->id} terug geopend."; break;

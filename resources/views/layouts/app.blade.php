@@ -5,12 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}"> {{-- CSRF Token --}}
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} | @yield('title')</title>
 
-    <!-- Styles -->
+    {{-- Styles --}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -20,7 +19,7 @@
             <div class="container">
                 <div class="navbar-header">
 
-                    <!-- Collapsed Hamburger -->
+                    {{-- Collapsed Hamburger --}}
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                         <span class="sr-only">Toggle Navigation</span>
                         <span class="icon-bar"></span>
@@ -28,21 +27,31 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ url('/') }}"> {{-- Branding image --}}
                         {{ config('app.name', 'Laravel') }}
-                    </a>
+                    </a> {{-- /Branding image --}}
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        <li><a href="{{ route('casualties.index') }}"><span class="fa fa-list" aria-hidden="true"></span> Namenlijst</a></li>
-                        <li><a href="{{ route('news.index') }}"><span class="fa fa-newspaper-o" aria-hidden="true"></span> Nieuws</a></li>
-                        <li><a href="{{ route('disclaimer') }}"><span class="fa fa-legal" aria-hidden="true"></span> Disclaimer</a></li>
+                    <ul class="nav navbar-nav"> {{-- Left side of the navbar. --}}
+                        <li @if (Request::is('casualties*')) class="active" @endif>
+                            <a href="{{ route('casualties.index') }}">
+                                <span class="fa fa-list" aria-hidden="true"></span> Namenlijst
+                            </a>
+                        </li>
+                        <li @if (Request::is('news*')) class="active" @endif>
+                            <a href="{{ route('news.index') }}">
+                                <span class="fa fa-newspaper-o" aria-hidden="true"></span> Nieuws
+                            </a>
+                        </li>
+                        <li @if (Request::is('disclaimer*')) class="active" @endif>
+                            <a href="{{ route('disclaimer') }}">
+                                <span class="fa fa-legal" aria-hidden="true"></span> Disclaimer
+                            </a>
+                        </li>
 
                         @if (auth()->check()) {{-- There is a authencated user. --}}
-                            <li>
+                            <li @if (Request::is('helpdesk*')) class="active" @endif>
                                 <a href="{{ route('helpdesk.index') }}">
                                     <span class="fa fa-question" aria-hidden="true"></span> Helpdesk
                                 </a>
@@ -50,13 +59,19 @@
                         @endif {{-- END authencated user block. --}}
                     </ul>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
+                    <ul class="nav navbar-nav navbar-right"> {{-- Right side of the navbar --}}
+                        @if (Auth::guest()) {{-- Authentication Links --}}
+                            <li>
+                                <a href="{{ route('login') }}">
+                                    <span class="fa fa-sign-in" aria-hidden="true"></span> Login
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('register') }}">
+                                    <span class="fa fa-plus" aria-hidden="true"></span> Register
+                                </a>
+                            </li>
+                        @else {{-- The user is authencated --}}
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <span class="fa fa-user" aria-hidden="true"></span> {{ Auth::user()->name }} <span class="caret"></span>
@@ -88,7 +103,7 @@
         @yield('content')
     </div>
 
-    <!-- Scripts -->
+    {{-- Scripts --}}
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

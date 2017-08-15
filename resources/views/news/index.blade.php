@@ -11,6 +11,15 @@
                         <div class="page-header" style="margin-top: -20px;">
                             <h2 style="margin-bottom: -5px;">Nieuwsberichten.</h2>
                         </div>
+
+                        @if (count($messages) === 0) {{-- No news messages found. --}}
+                            <div class="alert alert-info alert-important">
+                                <h4><span class="fa fa-info-circle" aria-hidden="true"></span> Info:</h4>
+                                Er zijn momenteel geen nieuws berichten. Kom later nog eens terug en
+                                misschien hebben we dan wel nieuws voor je :).
+                            </div>
+                        @else {{-- There are news messages found. --}}
+                        @endif
                     </div>
                 </div>
             </div> {{-- /News content --}}
@@ -34,61 +43,10 @@
                         <span class="fa fa-tags" aria-hidden="true"></span> Categorieen
                     </div>
                     <div class="panel-body">
-                        @if (count($categories) === 0)
-                        @else
-                            @foreach ($petitions as $petition)
-                                <div style="margin-left: -15px;" class="col-sm-12">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <h4>
-                                                <strong>
-                                                    <a href="{{ route('petitions.show', $petition) }}">
-                                                        @if ($petition->type === 'mailing') [Mailing]: @endif
-                                                        {{ $petition->title }}
-                                                    </a>
-                                                </strong>
-                                            </h4>
-                                        </div>
-                                    </div>
+                        @if (count($categories) === 0) {{-- No categories found in the system. --}}
+                            <small><i>(Er zijn geen categorieen gevonden.)</i></small>
+                        @else {{-- There are categories found in the system. --}}
 
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <a href="{{ route('petitions.show', $petition) }}" class="thumbnail">
-                                                <img src="{{ asset($petition->image_path) }}" alt="{{ $petition->title }}">
-                                            </a>
-                                        </div>
-
-                                        <div class="col-md-9">
-                                            <p>{{ strip_tags($petition->text) }}</p>
-                                            <p>
-                                                <a class="btn btn-sm btn-info" href="{{ route('petitions.show', $petition) }}">
-                                                    <span class="fa fa-chevron-right" aria-hidden="true"></span> Lees meer
-                                                </a>
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-12" style="margin-top: -20px;">
-                                            <p></p>
-
-                                            <p>
-                                                <i class="fa fa-user" aria-hidden="true"></i> Autheur: {{ $petition->author->name }}
-                                                | <i class="fa fa-calendar" aria-hidden="true"></i> 10/11/2017
-                                                | <i class="fa fa-tags" aria-hidden="true"></i> Tags:
-
-                                                @if ($petition->categories()->count() > 0)
-                                                    @foreach($petition->categories as $category)
-                                                        <span class="label label-danger">{{ $category->name }}</span>
-                                                    @endforeach
-                                                @else
-                                                    <span class="label label-primary">Geen</span>
-                                                @endif
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
                         @endif
                     </div>
                 </div> {{-- /Category box --}}

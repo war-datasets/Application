@@ -23,6 +23,13 @@ class HelpdeskRepository extends Repository
         return Helpdesk::class;
     }
 
+    /**
+     * Count method for counting helpdesk tickets in the system.
+     *
+     * @param  null|string $column
+     * @param  null|string $value
+     * @return integer
+     */
     public function countQuestions($column = null, $value = null)
     {
         if (is_null($column) && is_null($value)) { // The application need all the questions.
@@ -32,11 +39,30 @@ class HelpdeskRepository extends Repository
         return $this->model->where($column, $value)->count(); // Retrun count based on colum/value.
     }
 
-    public function updateTicket(array $data)
+    /**
+     * Update a ticket in the database.
+     *
+     * @param  integer $ticketId The id from the ticket in the database.
+     * @param  array   $data     The array with column/value pair that u want to update.
+     * @return bool
+     */
+    public function updateTicket($ticketId, array $data)
     {
+        if ($this->findTicket($ticketId)->update($data)) {
+            return true; // UPDATE = OK
+        }
+
+        return false; // UPDATE = NOK
     }
 
+    /**
+     * Find a specific ticket in the database.
+     *
+     * @param  integer $ticketId The integer from the ticket in the database
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     */
     public function findTicket($ticketId)
     {
+        return $this->model->findOrFail($ticketId);
     }
 }

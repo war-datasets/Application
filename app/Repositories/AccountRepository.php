@@ -22,4 +22,12 @@ class AccountRepository extends Repository
     {
         return User::class;
     }
+
+    public function securityUpdate(array $input)
+    {
+    }
+
+    public function infoUpdate(array $input)
+    {
+    }
 }
