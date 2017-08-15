@@ -37,7 +37,7 @@ class HelpdeskController extends Controller
     public function index()
     {
         if ($this->userHasAdminRights()) { // The user has the admin rights.
-            $tickets = $this->helpdeskRepository->getTicketsAdmin(30);
+            $tickets = $this->helpdeskRepository; // Return repository instance. functions called in view.
             return view('helpdesk.admin', compact('tickets'));
         }
 
@@ -57,7 +57,7 @@ class HelpdeskController extends Controller
                 return view('helpdesk.show', compact('ticket'));
             }
 
-            return redirect()->route('helpdesk.index'); // Redirect the user. Because not permissions;
+            return redirect()->route('helpdesk.index'); // Redirect the user. Because not permitted.
         } catch (ModelNotFoundException $modelNotFoundException) { // Ticket => NOT FOUND
             flash("Wij konden geen ticket vinden met de id #{$ticketId}")->danger();
             return redirect()->route('helpdesk.route');
@@ -67,20 +67,20 @@ class HelpdeskController extends Controller
     /**
      * Open/Close a support ticket in the system.
      *
-     * @param  string  $status      The new status for the ticket.
-     * @param  integer $ticketId    The id for the ticket in the database.
+     * @param  string  $open      The new status for the ticket.
+     * @param  integer $ticketId  The id for the ticket in the database.
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function status($status, $ticketId)
+    public function status($open, $ticketId)
     {
         try { // To find the the support ticket in the database.
             $ticket = $this->helpdeskRepository->findTicket($ticketId);
 
-            if ($this->helpdeskRepository->updateTicket(['status' => $status])) {
+            if ($this->helpdeskRepository->updateTicket(['status' => $open])) {
                 // Ticket has been updated.
-                switch ($status) { // Determinate the status and set message based on status.
-                    case 'open':    $message = "Wij hebben ticket #{$ticket->id} terug geopend."; break;
-                    case 'sluiten': $message = "Wij hebben ticket #{$ticket->id} gesloten.";      break;
+                switch ($open) { // Determinate the status and set message based on status.
+                    case 'Y': $message = "Wij hebben ticket #{$ticket->id} terug geopend."; break;
+                    case 'N': $message = "Wij hebben ticket #{$ticket->id} gesloten.";      break;
                 }
 
                 flash($message)->success();
