@@ -77,16 +77,35 @@ class NewsController extends Controller
 
     }
 
+    /**
+     * Edit view for a specific article in the database.
+     *
+     * @param  integer $articleId The article id in the database.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit($articleId)
     {
-
+        return view();
     }
 
+    /**
+     * Update a specific news article.
+     *
+     * @param  NewsValidator $input     The user given input.
+     * @param  integer       $articleId The article id in the database.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(NewsValidator $input, $articleId)
     {
 
     }
 
+    /**
+     * Delete an article in the application.
+     *
+     * @param  integer $articleId The article id in the database.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function delete($articleId)
     {
     

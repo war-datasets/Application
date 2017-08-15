@@ -15,7 +15,7 @@ use Carbon\Carbon;
 class DataProcessingRepository extends Repository
 {
     /**
-     * Map thue model instance to the repository.
+     * Map the model instance to the repository.
      *
      * @return string
      */

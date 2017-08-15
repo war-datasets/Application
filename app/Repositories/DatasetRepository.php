@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\DB;
 class DatasetRepository extends Repository
 {
     /**
+     * The related database model.
+     *
      * @return string
      */
     public function model()

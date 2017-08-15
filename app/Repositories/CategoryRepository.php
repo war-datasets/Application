@@ -14,6 +14,8 @@ use ActivismeBE\DatabaseLayering\Repositories\Eloquent\Repository;
 class CategoryRepository extends Repository
 {
     /**
+     * The related database model.
+     *
      * @return string
      */
     public function model()
@@ -21,6 +23,12 @@ class CategoryRepository extends Repository
         return Categories::class;
     }
 
+    /**
+     * Get random categories from the database.
+     *
+     * @param  integer $limit Limit amount for the database.
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|static[]
+     */
     public function getRandomCategories($limit)
     {
         return $this->model->orderByRaw("RAND()")->take($limit)->get();

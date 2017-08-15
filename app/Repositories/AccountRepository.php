@@ -13,8 +13,9 @@ use ActivismeBE\User;
  */
 class AccountRepository extends Repository
 {
-
     /**
+     * Map the related database model to the repository class.
+     *
      * @return string
      */
     public function model()

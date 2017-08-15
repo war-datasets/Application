@@ -13,14 +13,16 @@ use ActivismeBE\News;
  */
 class NewsRepository extends Repository
 {
-
     /**
+     * The related database model.
+     *
      * @return string
      */
     public function model()
     {
         return News::class;
     }
+
 
     public function getIndexMessages($paginateLimit)
     {
