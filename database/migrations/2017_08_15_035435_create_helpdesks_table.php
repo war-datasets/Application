@@ -15,6 +15,8 @@ class CreateHelpdesksTable extends Migration
     {
         Schema::create('helpdesks', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('author_id');
+            $table->string('open');
             $table->timestamps();
         });
     }

@@ -5,10 +5,16 @@ namespace ActivismeBE;
 use Chrisbjr\ApiGuard\Models\Mixins\Apikeyable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * Class User
+ *
+ * @package ActivismeBE
+ */
 class User extends Authenticatable
 {
-    use Notifiable, Apikeyable;
+    use Notifiable, Apikeyable, HasRoles;
 
     /**
      * The attributes that are mass assignable.

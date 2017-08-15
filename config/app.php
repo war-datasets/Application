@@ -170,6 +170,7 @@ return [
         ActivismeBE\DatabaseLayering\Repositories\Providers\RepositoryProvider::class,
         Chrisbjr\ApiGuard\Providers\ApiGuardServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
         /*
          * Application Service Providers...

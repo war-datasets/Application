@@ -24,3 +24,5 @@ Route::get('disclaimer', 'DisclaimerController@index')->name('disclaimer');
 Route::get('account/settings', 'AccountSettingsController@index')->name('account.settings');
 
 Route::get('news/index', 'NewsController@index')->name('news.index');
+
+Route::get('helpdesk', 'HelpdeskController@index')->name('helpdesk.index');

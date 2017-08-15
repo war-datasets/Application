@@ -25,6 +25,11 @@ class HelpdeskRepository extends Repository
 
     public function countQuestions($column = null, $value = null)
     {
+        if (is_null($column) && is_null($value)) { // The application need all the questions.
+            return $this->model->count();
+        }
+
+        return $this->model->where($column, $value)->count(); // Retrun count based on colum/value.
     }
 
     public function updateTicket(array $data)

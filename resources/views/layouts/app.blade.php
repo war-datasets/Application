@@ -43,7 +43,7 @@
 
                         @if (auth()->check()) {{-- There is a authencated user. --}}
                             <li>
-                                <a href="">
+                                <a href="{{ route('helpdesk.index') }}">
                                     <span class="fa fa-question" aria-hidden="true"></span> Helpdesk
                                 </a>
                             </li>
