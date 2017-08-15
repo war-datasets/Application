@@ -22,4 +22,8 @@ class HelpdeskRepository extends Repository
     {
         return Helpdesk::class;
     }
+
+    public function countQuestions($column = null, $value = null)
+    {
+    }
 }

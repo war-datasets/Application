@@ -3,6 +3,7 @@
 namespace ActivismeBE\Http\Controllers;
 
 use ActivismeBE\Repositories\HelpdeskRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 /**
@@ -21,7 +22,7 @@ class HelpdeskController extends Controller
      */
     public function __construct(HelpdeskRepository $helpdeskRepository)
     {
-        $this->middleware('auth')->only(['indexAdmin']);
+        $this->middleware('auth')->only(['indexAdmin', 'status']);
 
         $this->helpdeskRepository = $helpdeskRepository;
     }
@@ -38,5 +39,32 @@ class HelpdeskController extends Controller
     public function indexAdmin()
     {
 
+    }
+
+    /**
+     * Open/Close a support ticket in the system.
+     *
+     * @param  string  $status      The new status for the ticket.
+     * @param  integer $ticketId    The id for the ticket in the database.
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function status($status, $ticketId)
+    {
+        try { // To find the the support ticket in the database.
+            $ticket = $this->helpdeskRepository->findTicket($ticketId);
+
+            if ($this->helpdeskRepository->updateTicket(['status' => $status])) {
+                // Ticket has been updated.
+                switch ($status) { // Determinate the status and set message based on status.
+                    case 'open':    $message = "Wij hebben ticket #{$ticket->id} terug geopend."; break;
+                    case 'sluiten': $message = "Wij hebben ticket #{$ticket->id} gesloten.";      break;
+                }
+
+                flash($message)->success();
+            }
+        } catch (ModelNotFoundException $modelNotFoundException) {
+            flash("Wij konden geen ticket vinden met de id #{$ticketId}")->danger();
+            return redirect()->route('helpdesk.route');
+        }
     }
 }
