@@ -29,6 +29,11 @@ class HelpdeskController extends Controller
 
     public function indexUser()
     {
+        if ($this->helpdeskRepository->userHasNeededRights()) { // The user has the admin rights.
+            $tickets = $this->helpdeskRepository->getTicketsAdmin(30);
+            return view('helpdesk.admin', compact('tickets'));
+        }
+
         $all    = $this->helpdeskRepository->countQuestions();
         $open   = $this->helpdeskRepository->countQuestions('open', 'Y');
         $closed = $this->helpdeskRepository->countQuestions('open', 'N');
@@ -36,16 +41,10 @@ class HelpdeskController extends Controller
         return view('helpdesk.index', compact('all', 'open', 'closed'));
     }
 
-    public function indexAdmin()
-    {
-
-    }
-
     public function show($ticketId)
     {
         try { // To find the ticket in the database.
             $ticket = $this->helpdeskRepository->findTicket($ticketId);
-
             return view('helpdesk.show', compact('ticket'));
         } catch (ModelNotFoundException $modelNotFoundException) { // Ticket => NOT FOUND
             flash("Wij konden geen ticket vinden met de id #{$ticketId}")->danger();
