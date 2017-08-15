@@ -4,6 +4,11 @@ namespace ActivismeBE\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+/**
+ * Class HomeController
+ *
+ * @package ActivismeBE\Http\Controllers
+ */
 class HomeController extends Controller
 {
     /**
