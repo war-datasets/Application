@@ -26,6 +26,9 @@ class NewsController extends Controller
         $this->newsRepository     = $newsRepository;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $categories = $this->categoryRepository->getRandomCategories(15);
@@ -34,6 +37,10 @@ class NewsController extends Controller
         return view('news.index', compact('categories', 'messages'));
     }
 
+    /**
+     * @param  integer $articleId
+     * @return mixed
+     */
     public function show($articleId)
     {
         if ($this->newsRepository->articleExists($articleId)) {
@@ -45,9 +52,12 @@ class NewsController extends Controller
         return redirect()->route('news.index');
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function create()
     {
-
+        //
     }
 
     public function store(NewsValidator $input)
