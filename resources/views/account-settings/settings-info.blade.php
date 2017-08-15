@@ -1,7 +1,9 @@
 <div class="panel panel-default">
     <div class="panel-heading">Account informatie:</div>
     <div class="panel-body">
-        <form action="" class="form-horizontal">
+        <form action="{{ route('account.settings.info') }}" class="form-horizontal">
+            {{ csrf_field() }} {{-- CSRF form protection field --}}
+
             <div class="form-group">
                 <label class="control-label col-md-3">
                     Naam: <span class="text-danger">*</span>

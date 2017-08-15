@@ -21,7 +21,10 @@ Route::get('search', 'CasualtyController@search')->name('casualty.search');
 
 Route::get('disclaimer', 'DisclaimerController@index')->name('disclaimer');
 
+// Account settings routes
 Route::get('account/settings', 'AccountSettingsController@index')->name('account.settings');
+Route::post('account/update/security', 'AccountSettingsController@updateSecurity')->name('account.settings.security');
+Route::post('account/update/settings', 'AccountSettingsController@updateInfo')->name('account.settings.info');
 
 Route::get('news/index', 'NewsController@index')->name('news.index');
 

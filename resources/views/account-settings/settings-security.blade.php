@@ -2,7 +2,7 @@
     <div class="panel-heading">Account beveiliging.</div>
 
     <div class="panel-body">
-        <form action="" class="form-horizontal" method="POST">
+        <form action="{{ route('account.settings.security') }}" class="form-horizontal" method="POST">
             {{ csrf_field() }} {{-- CSRF form protection --}}
 
             <div class="form-group">
