@@ -22,7 +22,7 @@ class HelpdeskController extends Controller
      */
     public function __construct(HelpdeskRepository $helpdeskRepository)
     {
-        $this->middleware('auth')->only(['indexAdmin', 'status']);
+        $this->middleware('auth')->only(['indexAdmin', 'status', 'show']);
 
         $this->helpdeskRepository = $helpdeskRepository;
     }
@@ -39,6 +39,18 @@ class HelpdeskController extends Controller
     public function indexAdmin()
     {
 
+    }
+
+    public function show($ticketId)
+    {
+        try { // To find the ticket in the database.
+            $ticket = $this->helpdeskRepository->findTicket($ticketId);
+
+            return view('helpdesk.show', compact('ticket'));
+        } catch (ModelNotFoundException $modelNotFoundException) { // Ticket => NOT FOUND
+            flash("Wij konden geen ticket vinden met de id #{$ticketId}")->danger();
+            return redirect()->route('helpdesk.route');
+        }
     }
 
     /**
@@ -62,7 +74,7 @@ class HelpdeskController extends Controller
 
                 flash($message)->success();
             }
-        } catch (ModelNotFoundException $modelNotFoundException) {
+        } catch (ModelNotFoundException $modelNotFoundException) { // Ticket => NOT FOUND
             flash("Wij konden geen ticket vinden met de id #{$ticketId}")->danger();
             return redirect()->route('helpdesk.route');
         }
