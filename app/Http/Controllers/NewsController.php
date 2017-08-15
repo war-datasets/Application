@@ -27,6 +27,8 @@ class NewsController extends Controller
     }
 
     /**
+     * Get the index page for the application news. 
+     * 
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
@@ -38,7 +40,9 @@ class NewsController extends Controller
     }
 
     /**
-     * @param  integer $articleId
+     * Show a specific article in the application. 
+     * 
+     * @param  integer $articleId The id in the database for the article.
      * @return mixed
      */
     public function show($articleId)
@@ -53,6 +57,8 @@ class NewsController extends Controller
     }
 
     /**
+     * Create view for a new article. 
+     * 
      * @return \Illuminate\Http\RedirectResponse
      */
     public function create()
@@ -60,6 +66,12 @@ class NewsController extends Controller
         //
     }
 
+    /**
+     * Store a new article in the database. 
+     *
+     * @param  NewsValidator $input The user given input.
+     * @return \Illuminate\Http\RedirectResponse 
+     */
     public function store(NewsValidator $input)
     {
 
@@ -77,6 +89,6 @@ class NewsController extends Controller
 
     public function delete($articleId)
     {
-
+    
     }
 }
