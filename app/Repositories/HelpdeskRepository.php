@@ -5,6 +5,7 @@ namespace ActivismeBE\Repositories;
 use ActivismeBE\DatabaseLayering\Repositories\Contracts\RepositoryInterface;
 use ActivismeBE\DatabaseLayering\Repositories\Eloquent\Repository;
 use ActivismeBE\Helpdesk;
+use ActivismeBE\Traits\Conditions\Helpdesk as HelpdeskConditions;
 
 /**
  * Class HelpdeskRepository
@@ -13,6 +14,8 @@ use ActivismeBE\Helpdesk;
  */
 class HelpdeskRepository extends Repository
 {
+    use HelpdeskConditions; // Used for the IF/ELSE conditions.
+
     /**
      * Map the related model to the repository class.
      *
@@ -64,5 +67,23 @@ class HelpdeskRepository extends Repository
     public function findTicket($ticketId)
     {
         return $this->model->findOrFail($ticketId);
+    }
+
+    /**
+     * Get all the tickets for the currently authencated user.
+     *
+     * @param  integer $type The type of the query.
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|int
+     */
+    public function getAuthencatedUserTickets($type)
+    {
+        $query = $this->model->where('author_id', auth()->user()->id)
+            ->with(['author', 'categories']);
+
+        if ($this->isCount($type)) {
+            return $query->count();
+        } elseif ($this->isPagination($type)) {
+            return $query->paginate(25);
+        }
     }
 }

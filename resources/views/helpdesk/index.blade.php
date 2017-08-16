@@ -54,8 +54,12 @@
                     <div class="panel-heading"><span class="fa fa-asterisk" aria-hidden="true"></span> Opties:</div>
 
                     <div class="list-group">
-                        <a href="" class="list-group-item"><span class="fa fa-btn fa-plus" aria-hidden="true"></span> Stel een nieuwe vraag.</a>
-                        <a href="" class="list-group-item"><span class="fa fa-btn fa-user" aria-hidden="true"></span> Bekijk jouw vragen.</a>
+                        <a href="{{ route('helpdesk.create') }}" class="list-group-item"><span class="fa fa-btn fa-plus" aria-hidden="true"></span> Stel een nieuwe vraag.</a>
+
+                        <a href="{{ route('helpdesk.user') }}" class="@if ($userTickets === 0) disabled @endif list-group-item">
+                            <span class="fa fa-btn fa-user" aria-hidden="true"></span> Bekijk jouw vragen.
+                        </a>
+
                         <a href="" class="list-group-item"><span class="fa fa-btn fa-globe" aria-hidden="true"></span> Bekijk de publieke vragen.</a>
                     </div>
                 </div>

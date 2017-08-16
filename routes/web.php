@@ -34,4 +34,8 @@ Route::get('/users', 'UsersController@index')->name('users.index');
 Route::get('/users/delete/{id}', 'UsersController@delete')->name('users.delete');
 
 Route::get('helpdesk', 'HelpdeskController@index')->name('helpdesk.index');
+Route::get('helpdesk/create', 'HelpdeskController@create')->name('helpdesk.create');
 Route::get('helpdesk/admin', 'HelpdeskController@admin')->name('helpdesk.admin');
+ROute::post('helpdesk/store', 'HelpdeskController@store')->name('helpdesk.store');
+Route::get('helpdesk/ticket/{id}', 'HelpdeskController@show')->name('helpdesk.show');
+Route::get('helpdesk/gebruiker', 'HelpdeskController@questionUser')->name('helpdesk.user');

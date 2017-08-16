@@ -21,7 +21,9 @@ trait Helpdesk
     }
 
     /**
-     * @param $ticket
+     * Determine if the authencated user can view the ticket or not.
+     *
+     * @param  mixed $ticket The ticket information from the database.
      * @return bool
      */
     public function userCanViewTicket($ticket)
@@ -32,5 +34,27 @@ trait Helpdesk
         $checkAuthor = $ticket->author_id === $user->id;
 
         return $checkAdmin || $checkAuthor;
+    }
+
+    /**
+     * Check if we need to count the results or not.
+     *
+     * @param  string $type The type for the query.
+     * @return bool
+     */
+    public function isCount($type)
+    {
+        return $type == 'count';
+    }
+
+    /**
+     * Check if the query needs to build up as pagination.
+     *
+     * @param  string $type The type for the query.
+     * @return bool
+     */
+    public function isPagination($type)
+    {
+        return $type == 'paginate';
     }
 }

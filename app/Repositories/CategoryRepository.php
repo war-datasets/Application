@@ -33,4 +33,15 @@ class CategoryRepository extends Repository
     {
         return $this->model->orderByRaw("RAND()")->take($limit)->get();
     }
+
+    /**
+     * Get all the categories by the module name.
+     *
+     * @param  string $moduleName The name of the module u needed.
+     * @return mixed
+     */
+    public function getByType($moduleName)
+    {
+        return $this->findAllBy('module', $moduleName ,['id', 'name']);
+    }
 }

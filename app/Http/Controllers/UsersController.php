@@ -2,7 +2,7 @@
 
 namespace ActivismeBE\Http\Controllers;
 
-use ActivismeBE\Traits\COnditions\Users as UserConditions;
+use ActivismeBE\Traits\Conditions\Users as UserConditions;
 use ActivismeBE\Repositories\ApiKeyRepository;
 use ActivismeBE\Repositories\UserRepository;
 use Illuminate\Http\Request;
