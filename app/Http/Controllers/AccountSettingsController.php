@@ -5,6 +5,7 @@ namespace ActivismeBE\Http\Controllers;
 use ActivismeBE\Http\Requests\AccountInfoValidator;
 use ActivismeBE\Http\Requests\AccountSecurityValidator;
 use ActivismeBE\Repositories\AccountRepository;
+use ActivismeBE\Repositories\ApiKeyRepository;
 use Illuminate\Http\Request;
 
 /**
@@ -22,13 +23,22 @@ class AccountSettingsController extends Controller
     private $accountRepository;
 
     /**
+     * The apikey eloquent database Layer;
+     *
+     * @var apiKeyRepository
+     */
+    private $apiKeyRepository;
+
+    /**
      * AccountSettingsController constructor.
      *
      * @param AccountRepository $accountRepository
+     * @param ApiKeyRepository   $apiKeyRepository
      */
-    public function __construct(AccountRepository $accountRepository)
+    public function __construct(AccountRepository $accountRepository, ApiKeyRepository $apiKeyRepository)
     {
         $this->accountRepository = $accountRepository;
+        $this->apiKeyRepository  = $apiKeyRepository;
     }
 
     /**
@@ -60,6 +70,15 @@ class AccountSettingsController extends Controller
     {
         if ($this->accountRepository->infoUpdate($input->all())) {
             flash('Wij hebben uw account informatie aangepast.')->success();
+        }
+
+        return redirect()->route('account.settings');
+    }
+
+    public function createAPiKey(Request $input)
+    {
+        if ($this->apiKeyRepository->createKey($input->service)) {
+            dd('done');
         }
 
         return redirect()->route('account.settings');

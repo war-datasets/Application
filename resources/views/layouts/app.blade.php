@@ -44,19 +44,27 @@
                                 <span class="fa fa-newspaper-o" aria-hidden="true"></span> Nieuws
                             </a>
                         </li>
-                        <li @if (Request::is('disclaimer*')) class="active" @endif>
-                            <a href="{{ route('disclaimer') }}">
-                                <span class="fa fa-legal" aria-hidden="true"></span> Disclaimer
-                            </a>
-                        </li>
-
                         @if (auth()->check()) {{-- There is a authencated user. --}}
+                            @role('admin') {{-- The user has the admin role --}}
+                                <li @if (Request::is('users*')) class="active" @endif>
+                                    <a href="{{ route('users.index') }}">
+                                        <span class="fa fa-users" aria-hidden="true"></span> Gebruikers <span class="caret"></span>
+                                    </a>
+                                </li>
+                            @endrole
+
                             <li @if (Request::is('helpdesk*')) class="active" @endif>
                                 <a href="{{ route('helpdesk.index') }}">
                                     <span class="fa fa-question" aria-hidden="true"></span> Helpdesk
                                 </a>
                             </li>
                         @endif {{-- END authencated user block. --}}
+
+                        <li @if (Request::is('disclaimer*')) class="active" @endif>
+                            <a href="{{ route('disclaimer') }}">
+                                <span class="fa fa-legal" aria-hidden="true"></span> Disclaimer
+                            </a>
+                        </li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right"> {{-- Right side of the navbar --}}

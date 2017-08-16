@@ -8,15 +8,15 @@
             <div class="col-md-3"> {{-- Sidebar --}}
                 <div class="list-group">
                     <a href="#info" class="list-group-item" aria-controls="info" role="tab" data-toggle="tab">
-                        Account informatie.
+                        <span class="fa fa-asterisk" aria-hidden="true"></span> Account informatie.
                     </a>
 
                     <a href="#security" class="list-group-item" aria-controls="security" role="tab" data-toggle="tab">
-                        Account beveiliging
+                        <span class="fa fa-asterisk" aria-hidden="true"></span> Account beveiliging
                     </a>
 
                     <a href="#api" class="list-group-item" aria-controls="api" role="tab" data-toggle="tab">
-                        API sleutels
+                        <span class="fa fa-asterisk" aria-hidden="true"></span> API sleutels
                     </a>
                 </div>
 

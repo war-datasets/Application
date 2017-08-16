@@ -33,4 +33,15 @@ class UserRepository extends Repository
     {
         return $this->model->paginate($perPage);
     }
+
+    /**
+     * Find a user in the database.
+     *
+     * @param  integer $userId The user id in the database.
+     * @return mixed
+     */
+    public function findUser($userId)
+    {
+        return $this->findOrFail($userId);
+    }
 }
