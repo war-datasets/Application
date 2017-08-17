@@ -58,7 +58,7 @@
 
             <div class="col-md-3"> {{-- Sidebar --}}
                 <div class="well well-sm"> {{-- SEARCH form --}}
-                    <form action="" method="GET">
+                    <form action="{{ route('users.search') }}" method="GET">
                         <div class="input-group">
                             <input type="text" name="term" placeholder="Zoek op naam, email" class="form-control">
 

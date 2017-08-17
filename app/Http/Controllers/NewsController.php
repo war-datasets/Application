@@ -6,9 +6,12 @@ use ActivismeBE\Http\Requests\NewsValidator;
 use ActivismeBE\Repositories\CategoryRepository;
 use ActivismeBE\Repositories\NewsRepository;
 use Illuminate\Http\Request;
+use ActivismeBE\Traits\Conditions\Helpdesk as HelpdeskConditions;
 
 class NewsController extends Controller
 {
+    use HelpdeskConditions; // Used to place the conditions in the if/else operators.
+
     private $categoryRepository;
     private $newsRepository;
 
@@ -33,10 +36,25 @@ class NewsController extends Controller
      */
     public function index()
     {
+        if ($this->userHasAdminRights()) { // Te authenticated user has admin rights.
+            return redirect()->route('news.admin');
+        }
+
         $categories = $this->categoryRepository->getRandomCategories(15);
         $messages   = $this->newsRepository->getIndexMessages(10);
 
         return view('news.index', compact('categories', 'messages'));
+    }
+
+    /**
+     * Get the admin panel for the news messages.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function admin()
+    {
+        $messages = $this->newsRepository->getIndexMessages(25);
+        return view('news.admin', compact('messages'));
     }
 
     /**

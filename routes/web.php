@@ -33,6 +33,7 @@ Route::get('news/index', 'NewsController@index')->name('news.index');
 
 Route::get('/users', 'UsersController@index')->name('users.index');
 Route::get('/users/delete/{id}', 'UsersController@delete')->name('users.delete');
+Route::get('/users/search', 'UsersController@search')->name('users.search');
 
 Route::get('helpdesk', 'HelpdeskController@index')->name('helpdesk.index');
 Route::get('helpdesk/create', 'HelpdeskController@create')->name('helpdesk.create');

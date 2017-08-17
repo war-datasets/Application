@@ -56,6 +56,18 @@ class UsersController extends Controller
     }
 
     /**
+     * Search for a specific user in the system.
+     *
+     * @param  Request $input The user given input
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search(Request $input)
+    {
+        $users = $this->userRepository->searchUser($input->term, 50);
+        return view('users.index', compact('users'));
+    }
+
+    /**
      * Delete a user in the system.
      *
      * @param  integer $userId The id from the user in the database.

@@ -44,4 +44,18 @@ class UserRepository extends Repository
     {
         return $this->findOrFail($userId);
     }
+
+    /**
+     * Search for a specific user in the database.
+     *
+     * @param  string  $searchTerm  The data input where u want to search for.
+     * @param  integer $perPage     Results per page.
+     * @return mixed
+     */
+    public function searchUser($searchTerm, $perPage)
+    {
+        return $this->model->where('name', 'LIKE', "$searchTerm")
+            ->orWhere('email', 'LIKE', "$searchTerm")
+            ->paginate($perPage);
+    }
 }
