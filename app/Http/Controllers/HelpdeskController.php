@@ -54,8 +54,6 @@ class HelpdeskController extends Controller
      */
     public function index()
     {
-        //! BUG: If user hasn't create any tickets. We need to disable the button.
-
         if ($this->userHasAdminRights()) { // The user has the admin rights.
             return redirect()->route('helpdesk.admin');
         }
