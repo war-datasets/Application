@@ -36,6 +36,7 @@ Route::get('/users/delete/{id}', 'UsersController@delete')->name('users.delete')
 Route::get('/users/search', 'UsersController@search')->name('users.search');
 Route::get('/users/json/{id}', 'UsersController@userJson')->name('user.json');
 Route::post('/users/block', 'UsersController@block')->name('user.block');
+Route::get('/users/unblock/{id}', 'usersController@unblock')->name('user.unblock');
 
 Route::get('helpdesk', 'HelpdeskController@index')->name('helpdesk.index');
 Route::get('helpdesk/create', 'HelpdeskController@create')->name('helpdesk.create');

@@ -92,9 +92,27 @@ class UsersController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function unblock()
+    /**
+     * Activate a user in the system.
+     *
+     * @param  integer $userId The id in the database from the user.
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function unblock($userId)
     {
-        //
+        $user = $this->userRepository->findUser($userId);
+
+        switch ($user) {
+            case ($user->isBanned()):
+                $user->unban(); // Unban the user in the system
+                flash('De gebruiker is terug geactiveerd')->success();
+                break;
+            case ($user->isNotBanned()):
+                flash('Wij konden de gebruiker niet activeren.')->warning();
+                break;
+        }
+
+        return redirect()->route('users.index');
     }
 
     /**
