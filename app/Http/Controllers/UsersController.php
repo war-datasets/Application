@@ -67,6 +67,16 @@ class UsersController extends Controller
         return view('users.index', compact('users'));
     }
 
+    public function block()
+    {
+
+    }
+
+    public function unblock()
+    {
+
+    }
+
     /**
      * Delete a user in the system.
      *
