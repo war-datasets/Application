@@ -42,6 +42,8 @@ class AccountSettingsController extends Controller
     }
 
     /**
+     * Get the account configuration from the user.
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
@@ -50,6 +52,8 @@ class AccountSettingsController extends Controller
     }
 
     /**
+     * Update the account security settings from the user.
+     *
      * @param  AccountSecurityValidator $input The user given input.
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -57,12 +61,15 @@ class AccountSettingsController extends Controller
     {
         if ($this->accountRepository->securityUpdate($input->all())) {
             flash("Wij hebben uw account beveiliging aangepast.")->success();
+            session()->flash('tab-status', 'account-sec');
         }
 
         return redirect()->route('account.settings');
     }
 
     /**
+     * Update the account information from the user.
+     *
      * @param  AccountInfoValidator $input The user given input.
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -70,15 +77,25 @@ class AccountSettingsController extends Controller
     {
         if ($this->accountRepository->infoUpdate($input->all())) {
             flash('Wij hebben uw account informatie aangepast.')->success();
+            // No flash session needed because it is the default tab.
         }
 
         return redirect()->route('account.settings');
     }
 
+    /**
+     * Create an api key for the user in the system.
+     *
+     * @param  Request $input The user given input.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function createAPiKey(Request $input)
     {
-        if ($this->apiKeyRepository->createKey($input->service)) {
-            dd('done');
+        $this->validate($input, ['service' => 'required']);
+
+        if ($apiKey = $this->apiKeyRepository->createKey($input->service)) {
+            flash("De api sleutel: {$apiKey} is aangemaakt.");
+            session()->flash('tab-status', 'api-key');
         }
 
         return redirect()->route('account.settings');
