@@ -23,8 +23,15 @@ class AccountRepository extends Repository
         return User::class;
     }
 
+    /**
+     * Update the account security from the current authencated user.
+     *
+     * @param  array $input The user given form input.
+     * @return mixed
+     */
     public function securityUpdate(array $input)
     {
+        return $this->update(['password' => bcrypt($input['password'])], auth()->user()->id);
     }
 
     public function infoUpdate(array $input)

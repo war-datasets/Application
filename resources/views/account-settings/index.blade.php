@@ -32,15 +32,15 @@
 
             <div class="col-md-9"> {{-- Content --}}
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active" id="info">
+                    <div role="tabpanel" class="tab-pane @if(! session()->get('tab-status')) active @endif fade in" id="info">
                         @include ('account-settings.settings-info')
                     </div>
 
-                    <div role="tabpanel" class="tab-pane fade" id="security">
+                    <div role="tabpanel" class="tab-pane fade in @if (session()->get('tab-status') === 'account-sec') active @endif" id="security">
                         @include ('account-settings.settings-security')
                     </div>
 
-                    <div role="tabpanel" class="tab-pane fade" id="api">
+                    <div role="tabpanel" class="@if (session()->get('tab-status') === 'api-key') active @endif tab-pane fade in" id="api">
                         @include ('account-settings.settings-api')
                     </div>
                 </div>

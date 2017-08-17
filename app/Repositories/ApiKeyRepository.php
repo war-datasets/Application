@@ -66,7 +66,7 @@ class ApiKeyRepository extends Repository
      */
     private function addServiceDescription($id, $serviceName)
     {
-        $key = $this->findOrFail($id);
+        $key = $this->model->findOrFail($id);
         $key->service = $serviceName;
 
         if ($key->save()) { // Update = SUCCESS
