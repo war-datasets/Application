@@ -23,6 +23,12 @@
                     </div>
                 </div>
             </div> {{-- /Info Block --}}
+
+            <div class="col-md-12"> {{-- Question block --}}
+                <div class="panel panel-default">
+                    <div class="panel-heading"><span class="fa fa-info-circle" aria-hidden="true"></span> Uw vragen:</div>
+                </div>
+            </div> {{-- END question block --}}
         </div>
     </div>
 @endsection
