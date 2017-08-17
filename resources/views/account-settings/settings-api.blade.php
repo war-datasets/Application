@@ -1,11 +1,30 @@
 <div class="panel panel-default">
     <div class="panel-heading"><span class="fa fa-plus" aria-hidden="true"></span> Genereer een nieuwe API sleutel.</div>
     <div class="panel-body">
-        <form action="{{ route('api.key.create') }}" method="POST" class="form-inline">
+        <form action="{{ route('api.key.create') }}" method="POST" class="form-horizontal">
             {{ csrf_field() }} {{-- CSRF form protection --}}
 
-            <input type="text" name="service" class="form-control" style="width:85%" placeholder="Naam van je applicatie.">
-            <button class="btn btn-success"><span class="fa fa-plus" aria-hidden="true"></span> Aanmaken</button>
+            <div class="form-group">
+                <div class="col-md-12 {{ $errors->has('service') ? 'has-error' : '' }}">
+                    <input type="text" name="service" class="form-control" placeholder="Naam van je applicatie.">
+
+                    @if ($errors->has('service'))
+                        <small class="help-block">{{ $errors->first('service') }}</small>
+                    @endif
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-sm btn-success">
+                        <span class="fa fa-check" aria-hidden="true"></span> Toevoegen
+                    </button>
+
+                    <button class="btn btn-sm btn-link" type="reset">
+                        <span class="fa fa-undo" aria-hidden="true"></span> Annuleren
+                    </button>
+                </div>
+            </div>
         </form>
     </div>
 </div>

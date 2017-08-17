@@ -4,6 +4,7 @@ namespace ActivismeBE\Http\Controllers;
 
 use ActivismeBE\Http\Requests\AccountInfoValidator;
 use ActivismeBE\Http\Requests\AccountSecurityValidator;
+use ActivismeBE\Http\Requests\ApiKeyCreationValidator;
 use ActivismeBE\Repositories\AccountRepository;
 use ActivismeBE\Repositories\ApiKeyRepository;
 use ActivismeBE\Traits\Conditions\ApiKey as ApiKeyConditions;
@@ -90,13 +91,11 @@ class AccountSettingsController extends Controller
     /**
      * Create an api key for the user in the system.
      *
-     * @param  Request $input The user given input.
+     * @param  ApiKeyCreationValidator $input The user given input.
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function createAPiKey(Request $input)
+    public function createAPiKey(ApiKeyCreationValidator $input)
     {
-        $this->validate($input, ['service' => 'required']);
-
         if ($apiKey = $this->apiKeyRepository->createKey($input->service)) {
             flash("De api sleutel: {$apiKey} is aangemaakt.")->success();
             session()->flash('tab-status', 'api-key');
