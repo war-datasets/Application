@@ -2,7 +2,9 @@
 
 namespace ActivismeBE;
 
+use Cog\Ban\Contracts\HasBans as HasBansContract;
 use Chrisbjr\ApiGuard\Models\Mixins\Apikeyable;
+use Cog\Ban\Traits\HasBans;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
@@ -12,9 +14,9 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @package ActivismeBE
  */
-class User extends Authenticatable
+class User extends Authenticatable implements HasBansContract
 {
-    use Notifiable, Apikeyable, HasRoles;
+    use Notifiable, Apikeyable, HasRoles, HasBans;
 
     /**
      * The attributes that are mass assignable.

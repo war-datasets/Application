@@ -40,7 +40,7 @@
 
                                             <td class="text-center"> {{-- Options --}}
                                                 <a href="" class="label label-info">Wijzig</a>
-                                                <a href="" class="label label-warning">Blokkeer</a>
+                                                <a onclick="getDataById('{{ route('user.json', $user) }}', '#block-user')" class="label label-warning">Blokkeer</a>
                                                 <a href="{{ route('users.delete', $user) }}" class="label label-danger">Verwijder</a>
                                             </td> {{-- /Options --}}
                                         </tr>
@@ -87,4 +87,12 @@
             </div> {{-- END sidebar --}}
         </div>
     </div>
+
+    {{-- Include needed database modals. --}}
+        @include('users.modals.block-user')
+    {{-- END includes --}}
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/ajax-user.js') }}"></script>
+@endpush

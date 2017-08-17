@@ -171,6 +171,7 @@ return [
         Chrisbjr\ApiGuard\Providers\ApiGuardServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Cog\Ban\Providers\BanServiceProvider::class,
 
         /*
          * Application Service Providers...

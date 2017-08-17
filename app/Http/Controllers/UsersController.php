@@ -2,9 +2,11 @@
 
 namespace ActivismeBE\Http\Controllers;
 
+use ActivismeBE\Http\Requests\BlockValidator;
 use ActivismeBE\Traits\Conditions\Users as UserConditions;
 use ActivismeBE\Repositories\ApiKeyRepository;
 use ActivismeBE\Repositories\UserRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /**
@@ -67,14 +69,44 @@ class UsersController extends Controller
         return view('users.index', compact('users'));
     }
 
-    public function block()
+    /**
+     * Block a user in the system.
+     *
+     * @param  BlockValidator $input The user given input.
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function block(BlockValidator $input)
     {
+        if ($this->currentUser($input->id)) {
+            flash("Je kan jezelf helaas niet blokkeren.")->warning();
+            return redirect()->route('users.index');
+        }
 
+        $user = $this->userRepository->findUser($input->id);
+        $user->ban([
+            'comment'    => $input->reason,
+            'expired_at' => Carbon::parse($input->eind_datum)
+        ]);
+
+        flash("{$user->name} is geblokkeerd tot {$input->eind_datum}.")->success();
+        return redirect()->route('users.index');
     }
 
     public function unblock()
     {
+        //
+    }
 
+    /**
+     * Find and return a user in json.
+     *
+     * @param  integer $userId The id in the database for the user.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function userJson($userId)
+    {
+        // TODO: Possible refactor this and set is to the api
+        return response()->json($this->userRepository->findUser($userId));
     }
 
     /**
