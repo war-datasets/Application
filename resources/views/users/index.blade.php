@@ -32,7 +32,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($users as $user) {{-- Loop through the users. --}}
-                                        <tr>
+                                        <tr @if ($user->isBanned()) class="danger" @endif>
                                             <td><strong>#{{ $user->id }}</strong></td>
                                             <td>{{ $user->name }}</td>
                                             <td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
@@ -40,7 +40,13 @@
 
                                             <td class="text-center"> {{-- Options --}}
                                                 <a href="" class="label label-info">Wijzig</a>
-                                                <a onclick="getDataById('{{ route('user.json', $user) }}', '#block-user')" class="label label-warning">Blokkeer</a>
+
+                                                @if ($user->isNotBanned()) {{-- User is active --}}
+                                                    <a onclick="getDataById('{{ route('user.json', $user) }}', '#block-user')" class="label label-warning">Blokkeer</a>
+                                                @elseif($user->isBanned()) {{-- User is banned --}}
+                                                <a href="{{ route('user.unblock', $user) }}" class="label label-success">Activeer</a>
+                                                @endif
+
                                                 <a href="{{ route('users.delete', $user) }}" class="label label-danger">Verwijder</a>
                                             </td> {{-- /Options --}}
                                         </tr>
