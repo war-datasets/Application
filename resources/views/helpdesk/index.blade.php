@@ -56,9 +56,11 @@
                     <div class="list-group">
                         <a href="{{ route('helpdesk.create') }}" class="list-group-item"><span class="fa fa-btn fa-plus" aria-hidden="true"></span> Stel een nieuwe vraag.</a>
 
-                        <a href="{{ route('helpdesk.user') }}" class="@if ($userTickets === 0) disabled @endif list-group-item">
-                            <span class="fa fa-btn fa-user" aria-hidden="true"></span> Bekijk jouw vragen.
-                        </a>
+                        @if ($userTickets > 0) {{-- User has no questions --}}
+                            <a href="{{ route('helpdesk.user') }}" class="list-group-item">
+                                <span class="fa fa-btn fa-user" aria-hidden="true"></span> Bekijk jouw vragen.
+                            </a>
+                        @endif
 
                         <a href="" class="list-group-item"><span class="fa fa-btn fa-globe" aria-hidden="true"></span> Bekijk de publieke vragen.</a>
                     </div>

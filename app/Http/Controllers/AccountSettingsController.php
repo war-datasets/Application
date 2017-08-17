@@ -113,9 +113,9 @@ class AccountSettingsController extends Controller
      */
     public function deleteApiKey($keyId)
     {
-        if ($this->canDeleteApiKey(auth()->user(), $keyId)) { // Check the permission before the delete.
-            if ($this->apiKeyRepository->keyExist($keyId) === 1) { // The api key is found.
-                if ($this->apiKeyRepository->deleteKey($keyId)) { // Api key === Deleted
+        if ($this->canDeleteApiKey(auth()->user(), $keyId)) {       // Check the permission before the delete.
+            if ($this->apiKeyRepository->keyExist($keyId) === 1) {  // The api key is found.
+                if ($this->apiKeyRepository->deleteKey($keyId)) {   // API key === Deleted
                     flash("De API sleutel is verwijderd.")->success();
                     session()->flash('tab-status', 'api-key');
                 }
