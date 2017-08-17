@@ -6,7 +6,9 @@ use ActivismeBE\Http\Requests\AccountInfoValidator;
 use ActivismeBE\Http\Requests\AccountSecurityValidator;
 use ActivismeBE\Repositories\AccountRepository;
 use ActivismeBE\Repositories\ApiKeyRepository;
+use ActivismeBE\Traits\Conditions\ApiKey as ApiKeyConditions;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * Class AccountSettingsController
@@ -15,6 +17,8 @@ use Illuminate\Http\Request;
  */
 class AccountSettingsController extends Controller
 {
+    use ApiKeyConditions; // Needed for the IF/ELSE statements.
+
     /**
      * The Account eloquent database layer.
      *
@@ -94,10 +98,33 @@ class AccountSettingsController extends Controller
         $this->validate($input, ['service' => 'required']);
 
         if ($apiKey = $this->apiKeyRepository->createKey($input->service)) {
-            flash("De api sleutel: {$apiKey} is aangemaakt.");
+            flash("De api sleutel: {$apiKey} is aangemaakt.")->success();
             session()->flash('tab-status', 'api-key');
         }
 
         return redirect()->route('account.settings');
+    }
+
+    /**
+     * Delete a api key in the system.
+     *
+     * @param  integer $keyId The primary key in the database from the key.
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteApiKey($keyId)
+    {
+        if ($this->canDeleteApiKey(auth()->user(), $keyId)) { // Check the permission before the delete.
+            if ($this->apiKeyRepository->keyExist($keyId) === 1) { // The api key is found.
+                if ($this->apiKeyRepository->deleteKey($keyId)) { // Api key === Deleted
+                    flash("De API sleutel is verwijderd.")->success();
+                    session()->flash('tab-status', 'api-key');
+                }
+            }
+
+            return redirect()->route('account.settings');
+        }
+
+        // The user hasn't the right permissions
+        return app()->abort(Response::HTTP_FORBIDDEN);
     }
 }

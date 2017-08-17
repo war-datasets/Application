@@ -90,4 +90,26 @@ class ApiKeyRepository extends Repository
             $this->delete($key->id); // The key has been deleted.
         }
     }
+
+    /**
+     * Delete some api key in the system.
+     *
+     * @param  integer $keyId The primary key in the db for the api key.
+     * @return mixed
+     */
+    public function deleteKey($keyId)
+    {
+        return $this->delete($keyId);
+    }
+
+    /**
+     * Count all the keys in the database with the given id.
+     *
+     * @param  integer $keyId The primary key in the db for the api key.
+     * @return int
+     */
+    public function keyExist($keyId)
+    {
+        return count($this->findAllBy('id', $keyId));
+    }
 }

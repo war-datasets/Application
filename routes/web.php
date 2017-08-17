@@ -26,7 +26,8 @@ Route::post('account/update/security', 'AccountSettingsController@updateSecurity
 Route::post('account/update/settings', 'AccountSettingsController@updateInfo')->name('account.settings.info');
 
 // API key routes
-Route::post('create/api/key', 'AccountSettingsController@createAPiKey')->name('api.key.create');
+Route::post('api/key/create', 'AccountSettingsController@createAPiKey')->name('api.key.create');
+Route::get('api/key/delete/{id}', 'AccountSettingsController@deleteApiKey')->name('api.key.delete');
 
 Route::get('news/index', 'NewsController@index')->name('news.index');
 
