@@ -26,13 +26,21 @@ $factory->define(ActivismeBE\User::class, function (Faker\Generator $faker) {
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(ActivismeBE\Role::class, function (Faker\Generator $faker) {
     return [
-
+        'author_id'   => factory(ActivismeBE\User::class)->create()->id,
+        'system_role' => 'Y',
+        'name'        => $faker->word,
+        'description' => $faker->paragraph,
+        'guard_name'  => 'web',
     ];
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(ActivismeBE\Permission::class, function (Faker\Generator $faker) {
     return [
-
+        'author_id'   => factory(ActivismeBE\User::class)->create()->id,
+        'system_role' => 'Y',
+        'name'        => $faker->word,
+        'description' => $faker->paragraph,
+        'guard_name'  => 'web',
     ];
 });
