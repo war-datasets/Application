@@ -2,6 +2,7 @@
 
 namespace ActivismeBE\Http\Controllers;
 
+use ActivismeBE\Http\Requests\RoleValidator;
 use ActivismeBE\Repositories\RoleRepository;
 use Illuminate\Http\Request;
 
@@ -52,5 +53,22 @@ class RoleController extends Controller
     {
         $roles = [];
         return view('roles.index', compact('roles'));
+    }
+
+    /**
+     * Store a new role in the database.
+     *
+     * @param  RoleValidator $input The given user input.
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function create(RoleValidator $input)
+    {
+        $input->merge(['author_id' => auth()->user()->id, 'system_role' => 'N']);
+
+        if ($role = $this->roleRepository->createRole($input)) {
+            flash("De rol ({ $role->name }) is toegevoegd in het systeem.");
+        }
+
+        return redirect()->route();
     }
 }

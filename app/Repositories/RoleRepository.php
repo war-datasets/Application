@@ -34,4 +34,15 @@ class RoleRepository extends Repository
     {
         return $this->paginate($perPage, $columns);
     }
+
+    /**
+     * Create a new role in the system.
+     *
+     * @param  mixed $input The given user input.
+     * @return mixed
+     */
+    public function createRole($input)
+    {
+        return $this->create($input->except(['_token']));
+    }
 }

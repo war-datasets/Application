@@ -2,6 +2,7 @@
 
 namespace ActivismeBE\Http\Controllers;
 
+use ActivismeBE\Http\Requests\PermissionValidator;
 use ActivismeBE\Repositories\PermissionRepository;
 use Illuminate\Http\Request;
 
@@ -51,5 +52,22 @@ class PermissionController extends Controller
     {
         $permissions = [];
         return view('permissions.index', compact('permissions'));
+    }
+
+    /**
+     * Create a new permission in the system.
+     *
+     * @param  PermissionValidator $input The given user input.
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function create(PermissionValidator $input)
+    {
+        $input->merge(['author_id' => auth()->user()->id, 'system_permission' => 'N']);
+
+        if ($permission = $this->permissionRepository->createPermission($input)) {
+            flash("De permission ({ $permission->name }) is aangemaakt.")->success();
+        }
+
+        return redirect()->route();
     }
 }

@@ -22,4 +22,15 @@ class PermissionRepository extends Repository
     {
         return Permission::class;
     }
+
+    /**
+     * Create a new permission in the system.
+     *
+     * @param  int $input The given user input.
+     * @return mixed
+     */
+    public function createPermission($input)
+    {
+        return $this->create($input->except(['_token']));
+    }
 }
