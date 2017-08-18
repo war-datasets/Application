@@ -2,6 +2,7 @@
 
 namespace ActivismeBE\Http\Controllers;
 
+use ActivismeBE\Repositories\PermissionRepository;
 use Illuminate\Http\Request;
 
 /**
@@ -11,6 +12,25 @@ use Illuminate\Http\Request;
  */
 class PermissionController extends Controller
 {
+    /**
+     * Permission database abstraction layer.
+     *
+     * @var PermissionRepository
+     */
+    private $permissionRepository;
+
+    /**
+     * PermissionController constructor.
+     *
+     * @param PermissionRepository $permissionRepository
+     */
+    public function __construct(PermissionRepository $permissionRepository)
+    {
+        $this->middleware('auth');
+
+        $this->permissionRepository = $permissionRepository;
+    }
+
     /**
      * Get the permissions index view.
      *

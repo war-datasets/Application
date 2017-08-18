@@ -67,4 +67,6 @@
             </div> {{-- END sidebar --}}
         </div>
     </div>
+
+    @include('roles.modal-create') {{-- Create modal for a new application role. --}}
 @endsection

@@ -11,6 +11,10 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span class="fa fa-users" aria-hidden="true"></span> Gebruikersbeheer.
+
+                        <button class="btn btn-xs btn-default pull-right">
+                            <span class="fa fa-plus" aria-hidden="true"></span> Gebruiker toevoegen.
+                        </button>
                     </div>
 
                     <div class="panel-body">
@@ -44,7 +48,7 @@
                                                 @if ($user->isNotBanned()) {{-- User is active --}}
                                                     <a onclick="getDataById('{{ route('user.json', $user) }}', '#block-user')" class="label label-warning">Blokkeer</a>
                                                 @elseif($user->isBanned()) {{-- User is banned --}}
-                                                <a href="{{ route('user.unblock', $user) }}" class="label label-success">Activeer</a>
+                                                    <a href="{{ route('user.unblock', $user) }}" class="label label-success">Activeer</a>
                                                 @endif
 
                                                 <a href="{{ route('users.delete', $user) }}" class="label label-danger">Verwijder</a>
