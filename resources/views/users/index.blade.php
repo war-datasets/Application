@@ -77,19 +77,7 @@
                     </form>
                 </div> {{-- END search form --}}
 
-                <div class="list-group">
-                    <a href="" class="@if (Request::is('users*')) active @endif list-group-item">
-                        Gebruikers beheer
-                    </a>
-
-                    <a href="" class="list-group-item">
-                        Rechten beheer
-                    </a>
-
-                    <a href="" class="list-group-item">
-                        Permissie beheer
-                    </a>
-                </div>
+                @include('modules.acl-sidenav') {{-- Implement sidebar navigation --}}
             </div> {{-- END sidebar --}}
         </div>
     </div>

@@ -38,6 +38,12 @@ Route::get('/users/json/{id}', 'UsersController@userJson')->name('user.json');
 Route::post('/users/block', 'UsersController@block')->name('user.block');
 Route::get('/users/unblock/{id}', 'usersController@unblock')->name('user.unblock');
 
+// Permissions routes
+Route::get('/permissions', 'PermissionController@index')->name('permissions.index');
+
+// Role routes
+Route::get('/roles', 'RoleController@index')->name('roles.index');
+
 Route::get('helpdesk', 'HelpdeskController@index')->name('helpdesk.index');
 Route::get('helpdesk/create', 'HelpdeskController@create')->name('helpdesk.create');
 Route::get('helpdesk/admin', 'HelpdeskController@admin')->name('helpdesk.admin');
