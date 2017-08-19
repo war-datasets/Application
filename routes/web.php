@@ -43,6 +43,8 @@ Route::get('/permissions', 'PermissionController@index')->name('permissions.inde
 
 // Role routes
 Route::get('/roles', 'RoleController@index')->name('roles.index');
+Route::get('/roles/delete/{id}', 'RoleController@delete')->name('roles.delete');
+Route::post('/role/store', 'RoleController@store')->name('roles.create');
 
 Route::get('helpdesk', 'HelpdeskController@index')->name('helpdesk.index');
 Route::get('helpdesk/create', 'HelpdeskController@create')->name('helpdesk.create');

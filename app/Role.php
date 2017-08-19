@@ -16,7 +16,7 @@ class Role extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['author_id', 'system_role', 'name', 'description'];
+    protected $fillable = ['author_id', 'system_role', 'guard_name', 'name', 'description'];
 
     /**
      * Author data relation.

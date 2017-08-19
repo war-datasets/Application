@@ -58,4 +58,15 @@ class RoleRepository extends Repository
         return $this->model->where('name', 'LIKE', "%$term%")
             ->paginate($perPage);
     }
+
+    /**
+     * Delete a role out off the database.
+     *
+     * @param  integer $roleId The id form the role in the database.
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     */
+    public function findRole($roleId)
+    {
+        return $this->model->findOrFail($roleId);
+    }
 }

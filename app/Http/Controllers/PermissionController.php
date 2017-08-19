@@ -4,6 +4,7 @@ namespace ActivismeBE\Http\Controllers;
 
 use ActivismeBE\Http\Requests\PermissionValidator;
 use ActivismeBE\Repositories\PermissionRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 /**
@@ -70,5 +71,14 @@ class PermissionController extends Controller
         }
 
         return redirect()->route('permissions.index');
+    }
+
+    public function delete($permissionId)
+    {
+        try {
+
+        } catch (ModelNotFoundException $exception) {
+            flash()->error();
+        }
     }
 }

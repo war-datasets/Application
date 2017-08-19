@@ -4,13 +4,15 @@
 
 @section('content')
     <div class="container">
+
+
         <div class="row">
             <div class="col-md-9"> {{-- Content --}}
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span class="fa fa-list" aria-hidden="true"></span> Rechten beheer:
 
-                        <button class="pull-right btn btn-xs btn-default">
+                        <button class="pull-right btn btn-xs btn-default" data-toggle="modal" data-target="#new-permission">
                             <span class="fa fa-plus" aria-hidden="true"></span> Rol toevoegen
                         </button>
                     </div>
@@ -32,12 +34,12 @@
                                 <tbody>
                                     @foreach ($roles as $role)
                                         <tr>
-                                            <td>#{{ $role->id }}</td>
+                                            <td><strong>#{{ $role->id }}</strong></td>
                                             <td>{{ $role->name }}</td>
                                             <td>{{ $role->description }}</td>
 
                                             <td class="text-center"> {{-- Options --}}
-
+                                                <a href="{{ route('roles.delete', $role) }}" class="label label-danger">Verwijder</a>
                                             </td> {{-- END options --}}
                                         </tr>
                                     @endforeach

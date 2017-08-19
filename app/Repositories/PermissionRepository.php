@@ -33,4 +33,21 @@ class PermissionRepository extends Repository
     {
         return $this->create($input->except(['_token']));
     }
+
+    public function getIndexPermissions($int)
+    {
+    }
+
+    /**
+     * Search for a specific permission in the system.
+     *
+     * @param  string  $term    The word or name where u want to search on.
+     * @param  integer $perPage The amount of rows per page.
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function searchPermission($term, $perPage)
+    {
+        return $this->model->where('name', 'LIKE', "$term")
+            ->paginate($perPage);
+    }
 }

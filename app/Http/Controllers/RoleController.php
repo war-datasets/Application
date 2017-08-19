@@ -4,6 +4,7 @@ namespace ActivismeBE\Http\Controllers;
 
 use ActivismeBE\Http\Requests\RoleValidator;
 use ActivismeBE\Repositories\RoleRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 /**
@@ -61,7 +62,7 @@ class RoleController extends Controller
      * @param  RoleValidator $input The given user input.
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function create(RoleValidator $input)
+    public function store(RoleValidator $input)
     {
         $input->merge(['author_id' => auth()->user()->id, 'system_role' => 'N']);
 
@@ -70,5 +71,26 @@ class RoleController extends Controller
         }
 
         return redirect()->route('roles.index');
+    }
+
+    /**
+     * Delete a role out off the system.
+     *
+     * @param  integer $roleId The primary key from te role in the db.
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete($roleId)
+    {
+        try {
+            $permission = $this->roleRepository->findRole($roleId);
+            $permission->syncPermissions([]);   // Empty relation for clearing the permissions relation.
+            $permission->delete();              // Finally delete the role.
+
+            flash('We have deleted the permission group');
+            return redirect()->route('roles.index');
+        } catch (ModelNotFoundException $exception) {
+            flash('Wij konden de permissie niet verwijderen.')->error();
+            return redirect()->route('roles.index');
+        }
     }
 }
