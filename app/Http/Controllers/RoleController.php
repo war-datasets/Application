@@ -51,7 +51,7 @@ class RoleController extends Controller
      */
     public function search(Request $input)
     {
-        $roles = [];
+        $roles = $this->roleRepository->searchRole($input->term, 25);
         return view('roles.index', compact('roles'));
     }
 
@@ -69,6 +69,6 @@ class RoleController extends Controller
             flash("De rol ({ $role->name }) is toegevoegd in het systeem.");
         }
 
-        return redirect()->route();
+        return redirect()->route('roles.index');
     }
 }

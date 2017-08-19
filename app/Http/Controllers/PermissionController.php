@@ -39,6 +39,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
+        $permissions = $this->permissionRepository->getIndexPermissions(25);
         return view('permissions.index', compact('permissions'));
     }
 
@@ -50,7 +51,7 @@ class PermissionController extends Controller
      */
     public function search(Request $input)
     {
-        $permissions = [];
+        $permissions = $this->permissionRepository->searchPermission($input->term, 25);
         return view('permissions.index', compact('permissions'));
     }
 
@@ -68,6 +69,6 @@ class PermissionController extends Controller
             flash("De permission ({ $permission->name }) is aangemaakt.")->success();
         }
 
-        return redirect()->route();
+        return redirect()->route('permissions.index');
     }
 }

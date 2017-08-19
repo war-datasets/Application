@@ -36,8 +36,10 @@ class NewsController extends Controller
      */
     public function index()
     {
-        if ($this->userHasAdminRights()) { // Te authenticated user has admin rights.
-            return redirect()->route('news.admin');
+        if (auth()->check()) { // User is authenticated.
+            if ($this->userHasAdminRights()) { // Te authenticated user has admin rights.
+                return redirect()->route('news.admin');
+            }
         }
 
         $categories = $this->categoryRepository->getRandomCategories(15);

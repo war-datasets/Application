@@ -45,4 +45,17 @@ class RoleRepository extends Repository
     {
         return $this->create($input->except(['_token']));
     }
+
+    /**
+     * Search for a specific role in the system.
+     *
+     * @param  string  $term    The term where u want to search on the page.
+     * @param  integer $perPage The value of how many records u want per page.
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function searchRole($term, $perPage)
+    {
+        return $this->model->where('name', 'LIKE', "%$term%")
+            ->paginate($perPage);
+    }
 }
